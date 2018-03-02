@@ -17,7 +17,7 @@ export declare class Logger {
     warn(text: string, ...args: string[]): void;
     error(text: string, ...args: string[]): void;
     log(message: string, level?: LogLevel, newLine?: boolean): void;
-    diagnostics(diagnostics: ts.Diagnostic[]): void;
+    diagnostics(diagnostics: ReadonlyArray<ts.Diagnostic>): void;
     diagnostic(diagnostic: ts.Diagnostic): void;
 }
 export declare class ConsoleLogger extends Logger {

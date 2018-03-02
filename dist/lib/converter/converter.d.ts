@@ -5,7 +5,7 @@ import { Context } from './context';
 import { ConverterComponent } from './components';
 import { Component, ChildableComponent, ComponentClass } from '../utils/component';
 export interface ConverterResult {
-    errors: ts.Diagnostic[];
+    errors: ReadonlyArray<ts.Diagnostic>;
     project: ProjectReflection;
 }
 export declare class Converter extends ChildableComponent<Application, ConverterComponent> {

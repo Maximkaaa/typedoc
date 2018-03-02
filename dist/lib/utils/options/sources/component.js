@@ -49,23 +49,6 @@ var ComponentSource = (function (_super) {
             }
         }
     };
-    ComponentSource.prototype.removeComponent = function (component) {
-        var name = component.componentName;
-        var index = this.knownComponents.indexOf(name);
-        if (index !== -1) {
-            this.knownComponents.slice(index, 1);
-            for (var _i = 0, _a = component.getOptionDeclarations(); _i < _a.length; _i++) {
-                var declaration = _a[_i];
-                this.owner.removeDeclarationByName(declaration.name);
-            }
-        }
-        if (component instanceof component_1.ChildableComponent) {
-            for (var _b = 0, _c = component.getComponents(); _b < _c.length; _b++) {
-                var child = _c[_b];
-                this.removeComponent(child);
-            }
-        }
-    };
     ComponentSource.prototype.onComponentAdded = function (e) {
         this.addComponent(e.component);
     };
