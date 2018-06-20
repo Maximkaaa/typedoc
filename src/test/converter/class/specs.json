@@ -15,6 +15,90 @@
       "originalName": "%BASE%/class/class.ts",
       "children": [
         {
+          "id": 42,
+          "name": "NotExportedClass",
+          "kind": 128,
+          "kindString": "Class",
+          "flags": {
+            "isAbstract": true
+          },
+          "comment": {
+            "shortText": "This class will not appear when `excludeNotExported=true`"
+          },
+          "children": [
+            {
+              "id": 43,
+              "name": "add",
+              "kind": 2048,
+              "kindString": "Method",
+              "flags": {},
+              "signatures": [
+                {
+                  "id": 44,
+                  "name": "add",
+                  "kind": 4096,
+                  "kindString": "Call signature",
+                  "flags": {},
+                  "comment": {
+                    "shortText": "Adds two numbers"
+                  },
+                  "parameters": [
+                    {
+                      "id": 45,
+                      "name": "a",
+                      "kind": 32768,
+                      "kindString": "Parameter",
+                      "flags": {},
+                      "type": {
+                        "type": "intrinsic",
+                        "name": "number"
+                      }
+                    },
+                    {
+                      "id": 46,
+                      "name": "b",
+                      "kind": 32768,
+                      "kindString": "Parameter",
+                      "flags": {},
+                      "type": {
+                        "type": "intrinsic",
+                        "name": "number"
+                      }
+                    }
+                  ],
+                  "type": {
+                    "type": "intrinsic",
+                    "name": "void"
+                  }
+                }
+              ],
+              "sources": [
+                {
+                  "fileName": "class.ts",
+                  "line": 94,
+                  "character": 7
+                }
+              ]
+            }
+          ],
+          "groups": [
+            {
+              "title": "Methods",
+              "kind": 2048,
+              "children": [
+                43
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "fileName": "class.ts",
+              "line": 90,
+              "character": 31
+            }
+          ]
+        },
+        {
           "id": 34,
           "name": "TestAbstractClass",
           "kind": 128,
@@ -36,7 +120,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 80,
+                  "line": 76,
                   "character": 31
                 }
               ],
@@ -71,7 +155,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 82,
+                  "line": 78,
                   "character": 39
                 }
               ]
@@ -96,7 +180,7 @@
           "sources": [
             {
               "fileName": "class.ts",
-              "line": 79,
+              "line": 75,
               "character": 39
             }
           ],
@@ -128,7 +212,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 86,
+                  "line": 82,
                   "character": 22
                 }
               ],
@@ -172,7 +256,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 88,
+                  "line": 84,
                   "character": 30
                 }
               ],
@@ -202,7 +286,7 @@
           "sources": [
             {
               "fileName": "class.ts",
-              "line": 85,
+              "line": 81,
               "character": 44
             }
           ],
@@ -265,7 +349,7 @@
                 {
                   "fileName": "class.ts",
                   "line": 23,
-                  "character": 36
+                  "character": 37
                 }
               ]
             },
@@ -373,7 +457,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 44,
+                  "line": 43,
                   "character": 25
                 }
               ]
@@ -406,7 +490,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 39,
+                  "line": 38,
                   "character": 29
                 }
               ]
@@ -439,7 +523,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 34,
+                  "line": 33,
                   "character": 23
                 }
               ]
@@ -472,7 +556,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 49,
+                  "line": 48,
                   "character": 23
                 }
               ]
@@ -624,7 +708,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 63,
+                  "line": 60,
                   "character": 34
                 }
               ],
@@ -650,7 +734,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 73,
+                  "line": 70,
                   "character": 30
                 }
               ],
@@ -675,7 +759,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 73,
+                  "line": 70,
                   "character": 49
                 }
               ],
@@ -700,7 +784,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 73,
+                  "line": 70,
                   "character": 68
                 }
               ],
@@ -801,7 +885,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 63,
+                  "line": 60,
                   "character": 29
                 }
               ],
@@ -844,7 +928,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 58,
+                  "line": 55,
                   "character": 23
                 }
               ],
@@ -887,7 +971,7 @@
               "sources": [
                 {
                   "fileName": "class.ts",
-                  "line": 49,
+                  "line": 48,
                   "character": 23
                 }
               ],
@@ -930,7 +1014,7 @@
           "sources": [
             {
               "fileName": "class.ts",
-              "line": 53,
+              "line": 51,
               "character": 25
             }
           ],
@@ -948,6 +1032,7 @@
           "title": "Classes",
           "kind": 128,
           "children": [
+            42,
             34,
             38,
             2,

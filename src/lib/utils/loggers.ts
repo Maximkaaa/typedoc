@@ -116,7 +116,7 @@ export class Logger {
      *
      * @param diagnostics  The TypeScript messages that should be logged.
      */
-    public diagnostics(diagnostics: ts.Diagnostic[]) {
+    public diagnostics(diagnostics: ReadonlyArray<ts.Diagnostic>) {
         diagnostics.forEach((diagnostic) => {
             this.diagnostic(diagnostic);
         });
@@ -134,7 +134,7 @@ export class Logger {
             output += '(' + ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start).line + ')';
             output += ts.sys.newLine + ' ' + ts.flattenDiagnosticMessageText(diagnostic.messageText, ts.sys.newLine);
         } else {
-            output = diagnostic.messageText.toString();
+            output = ts.flattenDiagnosticMessageText(diagnostic.messageText, ts.sys.newLine);
         }
 
         switch (diagnostic.category) {
