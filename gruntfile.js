@@ -121,6 +121,7 @@ module.exports = function(grunt)
             module: 'CommonJS',
             experimentalDecorators: true,
             jsx: 'react',
+            skipLibCheck: true,
             lib: [
                 "lib.dom.d.ts",
                 "lib.es5.d.ts",
