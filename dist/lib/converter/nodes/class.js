@@ -39,7 +39,7 @@ var ClassConverter = (function (_super) {
         }
         else {
             reflection = index_2.createDeclaration(context, node, index_1.ReflectionKind.Class);
-            if (node.modifiers && node.modifiers.some(function (m) { return m.kind === ts.SyntaxKind.AbstractKeyword; })) {
+            if (reflection && node.modifiers && node.modifiers.some(function (m) { return m.kind === ts.SyntaxKind.AbstractKeyword; })) {
                 reflection.setFlag(index_1.ReflectionFlag.Abstract, true);
             }
         }
@@ -48,7 +48,9 @@ var ClassConverter = (function (_super) {
                 node.members.forEach(function (member) {
                     var modifiers = ts.getCombinedModifierFlags(member);
                     var privateMember = (modifiers & ts.ModifierFlags.Private) > 0;
-                    var exclude = context.converter.excludePrivate ? privateMember : false;
+                    var protectedMember = (modifiers & ts.ModifierFlags.Protected) > 0;
+                    var exclude = (context.converter.excludePrivate && privateMember)
+                        || (context.converter.excludeProtected && protectedMember);
                     if (!exclude) {
                         _this.owner.convertNode(context, member);
                     }

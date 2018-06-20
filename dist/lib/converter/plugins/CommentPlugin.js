@@ -75,7 +75,7 @@ var CommentPlugin = (function (_super) {
             reflection.kind = index_3.ReflectionKind.Event;
             CommentPlugin_1.removeTags(comment, 'event');
         }
-        if (comment.hasTag('hidden')) {
+        if (comment.hasTag('hidden') || comment.hasTag('ignore')) {
             if (!this.hidden) {
                 this.hidden = [];
             }

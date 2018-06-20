@@ -34,14 +34,27 @@ export class ComponentSource extends OptionsComponent {
         }
     }
 
+    private removeComponent(component: AbstractComponent<any>) {
+        let index = this.knownComponents.indexOf(component.componentName);
+        if (index !== -1) {
+            this.knownComponents.splice(index, 1);
+            for (let declaration of component.getOptionDeclarations()) {
+                this.owner.removeDeclarationByName(declaration.name);
+            }
+        }
+
+        if (component instanceof ChildableComponent) {
+            for (let child of component.getComponents()) {
+                this.removeComponent(child);
+            }
+        }
+    }
+
     private onComponentAdded(e: ComponentEvent) {
         this.addComponent(e.component);
     }
 
     private onComponentRemoved(e: ComponentEvent) {
-        const declarations = e.component.getOptionDeclarations();
-        for (let declaration of declarations) {
-            this.owner.removeDeclarationByName(declaration.name);
-        }
+        this.removeComponent(e.component);
     }
 }

@@ -15,6 +15,7 @@ export declare class Converter extends ChildableComponent<Application, Converter
     excludeExternals: boolean;
     excludeNotExported: boolean;
     excludePrivate: boolean;
+    excludeProtected: boolean;
     private compilerHost;
     private nodeConverters;
     private typeNodeConverters;

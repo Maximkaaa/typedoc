@@ -118,16 +118,21 @@ function parseComment(text, comment) {
         }
         comment.tags.push(currentTag);
     }
+    var CODE_FENCE = /^\s*```(?!.*```)/;
+    var inCode = false;
     function readLine(line) {
         line = line.replace(/^\s*\*? ?/, '');
         line = line.replace(/\s*$/, '');
-        var tag = /^@(\S+)/.exec(line);
-        if (tag) {
-            readTagLine(line, tag);
+        if (CODE_FENCE.test(line)) {
+            inCode = !inCode;
         }
-        else {
-            readBareLine(line);
+        if (!inCode) {
+            var tag = /^@(\S+)/.exec(line);
+            if (tag) {
+                return readTagLine(line, tag);
+            }
         }
+        readBareLine(line);
     }
     text = text.replace(/^\s*\/\*+/, '');
     text = text.replace(/\*+\/\s*$/, '');

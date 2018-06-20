@@ -1,5 +1,6 @@
 import { Converter } from './converter/index';
 import { Renderer } from './output/renderer';
+import { Serializer } from './serialization';
 import { ProjectReflection } from './models/index';
 import { Logger, PluginHost } from './utils/index';
 import { AbstractComponent, ChildableComponent } from './utils/component';
@@ -8,11 +9,12 @@ export declare class Application extends ChildableComponent<Application, Abstrac
     options: Options;
     converter: Converter;
     renderer: Renderer;
+    serializer: Serializer;
     logger: Logger;
     plugins: PluginHost;
     loggerType: string | Function;
     ignoreCompilerErrors: boolean;
-    exclude: string;
+    exclude: Array<string>;
     static VERSION: string;
     constructor(options?: Object);
     protected bootstrap(options?: Object): OptionsReadResult;

@@ -92,7 +92,7 @@ var Logger = (function () {
             output += ts.sys.newLine + ' ' + ts.flattenDiagnosticMessageText(diagnostic.messageText, ts.sys.newLine);
         }
         else {
-            output = diagnostic.messageText.toString();
+            output = ts.flattenDiagnosticMessageText(diagnostic.messageText, ts.sys.newLine);
         }
         switch (diagnostic.category) {
             case ts.DiagnosticCategory.Error:

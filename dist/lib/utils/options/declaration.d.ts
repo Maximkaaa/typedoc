@@ -24,7 +24,6 @@ export interface DeclarationOption {
     scope?: ParameterScope;
     map?: {};
     mapError?: string;
-    isArray?: boolean;
     defaultValue?: any;
     convert?: (param: OptionDeclaration, value?: any) => any;
 }

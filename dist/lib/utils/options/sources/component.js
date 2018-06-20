@@ -49,15 +49,27 @@ var ComponentSource = (function (_super) {
             }
         }
     };
+    ComponentSource.prototype.removeComponent = function (component) {
+        var index = this.knownComponents.indexOf(component.componentName);
+        if (index !== -1) {
+            this.knownComponents.splice(index, 1);
+            for (var _i = 0, _a = component.getOptionDeclarations(); _i < _a.length; _i++) {
+                var declaration = _a[_i];
+                this.owner.removeDeclarationByName(declaration.name);
+            }
+        }
+        if (component instanceof component_1.ChildableComponent) {
+            for (var _b = 0, _c = component.getComponents(); _b < _c.length; _b++) {
+                var child = _c[_b];
+                this.removeComponent(child);
+            }
+        }
+    };
     ComponentSource.prototype.onComponentAdded = function (e) {
         this.addComponent(e.component);
     };
     ComponentSource.prototype.onComponentRemoved = function (e) {
-        var declarations = e.component.getOptionDeclarations();
-        for (var _i = 0, declarations_1 = declarations; _i < declarations_1.length; _i++) {
-            var declaration = declarations_1[_i];
-            this.owner.removeDeclarationByName(declaration.name);
-        }
+        this.removeComponent(e.component);
     };
     ComponentSource = __decorate([
         component_1.Component({ name: 'options:component' })

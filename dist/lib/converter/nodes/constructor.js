@@ -69,6 +69,10 @@ var ConstructorConverter = (function (_super) {
         if (privateParameter && context.converter.excludePrivate) {
             return;
         }
+        var protectedParameter = modifiers & ts.ModifierFlags.Protected;
+        if (protectedParameter && context.converter.excludeProtected) {
+            return;
+        }
         var property = index_2.createDeclaration(context, parameter, index_1.ReflectionKind.Property);
         if (!property) {
             return;

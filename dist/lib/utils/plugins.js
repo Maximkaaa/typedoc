@@ -70,7 +70,7 @@ var PluginHost = (function (_super) {
             var path = process.cwd(), previous;
             do {
                 var modules = Path.join(path, 'node_modules');
-                if (FS.existsSync(modules) && FS.lstatSync(modules).isDirectory()) {
+                if (FS.existsSync(modules) && FS.statSync(modules).isDirectory()) {
                     discoverModules(modules);
                 }
                 previous = path;
@@ -78,15 +78,24 @@ var PluginHost = (function (_super) {
             } while (previous !== path);
         }
         function discoverModules(basePath) {
+            var candidates = [];
             FS.readdirSync(basePath).forEach(function (name) {
                 var dir = Path.join(basePath, name);
-                var infoFile = Path.join(dir, 'package.json');
+                if (name.startsWith('@')) {
+                    FS.readdirSync(dir).forEach(function (n) {
+                        candidates.push(Path.join(name, n));
+                    });
+                }
+                candidates.push(name);
+            });
+            candidates.forEach(function (name) {
+                var infoFile = Path.join(basePath, name, 'package.json');
                 if (!FS.existsSync(infoFile)) {
                     return;
                 }
                 var info = loadPackageInfo(infoFile);
                 if (isPlugin(info)) {
-                    result.push(name);
+                    result.push(Path.join(basePath, name));
                 }
             });
         }
@@ -117,8 +126,7 @@ var PluginHost = (function (_super) {
         component_1.Option({
             name: 'plugin',
             help: 'Specify the npm plugins that should be loaded. Omit to load all installed plugins, set to \'none\' to load no plugins.',
-            type: declaration_1.ParameterType.String,
-            isArray: true
+            type: declaration_1.ParameterType.Array
         })
     ], PluginHost.prototype, "plugins", void 0);
     PluginHost = __decorate([

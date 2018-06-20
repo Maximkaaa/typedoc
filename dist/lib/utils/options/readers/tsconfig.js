@@ -34,6 +34,9 @@ var TSConfigReader = (function (_super) {
         this.listenTo(this.owner, options_1.DiscoverEvent.DISCOVER, this.onDiscover, -100);
     };
     TSConfigReader.prototype.onDiscover = function (event) {
+        if (event.mode !== options_1.OptionsReadMode.Fetch) {
+            return;
+        }
         if (TSConfigReader_1.OPTIONS_KEY in event.data) {
             this.load(event, Path.resolve(event.data[TSConfigReader_1.OPTIONS_KEY]));
         }

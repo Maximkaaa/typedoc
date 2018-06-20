@@ -30,7 +30,7 @@ export class ClassConverter extends ConverterNodeComponent<ts.ClassDeclaration> 
         } else {
             reflection = createDeclaration(context, node, ReflectionKind.Class);
             // set possible abstract flag here, where node is not the inherited parent
-            if (node.modifiers && node.modifiers.some( m => m.kind === ts.SyntaxKind.AbstractKeyword )) {
+            if (reflection && node.modifiers && node.modifiers.some( m => m.kind === ts.SyntaxKind.AbstractKeyword )) {
                 reflection.setFlag(ReflectionFlag.Abstract, true);
             }
         }
@@ -40,7 +40,9 @@ export class ClassConverter extends ConverterNodeComponent<ts.ClassDeclaration> 
                 node.members.forEach((member) => {
                     const modifiers = ts.getCombinedModifierFlags(member);
                     const privateMember = (modifiers & ts.ModifierFlags.Private) > 0;
-                    const exclude = context.converter.excludePrivate ? privateMember : false;
+                    const protectedMember = (modifiers & ts.ModifierFlags.Protected) > 0;
+                    const exclude = (context.converter.excludePrivate && privateMember)
+                        || (context.converter.excludeProtected && protectedMember);
 
                     if (!exclude) {
                         this.owner.convertNode(context, member);
