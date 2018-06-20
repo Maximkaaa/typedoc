@@ -238,6 +238,13 @@ var Converter = (function (_super) {
             type: declaration_1.ParameterType.Boolean
         })
     ], Converter.prototype, "excludePrivate", void 0);
+    __decorate([
+        component_1.Option({
+            name: 'excludeProtected',
+            help: 'Ignores protected variables and methods',
+            type: declaration_1.ParameterType.Boolean
+        })
+    ], Converter.prototype, "excludeProtected", void 0);
     Converter = Converter_1 = __decorate([
         component_1.Component({ name: 'converter', internal: true, childClass: components_1.ConverterComponent })
     ], Converter);

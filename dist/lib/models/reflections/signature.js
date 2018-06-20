@@ -28,10 +28,10 @@ var SignatureReflection = (function (_super) {
             callback(this.type.declaration, abstract_1.TraverseProperty.TypeLiteral);
         }
         if (this.typeParameters) {
-            this.typeParameters.forEach(function (parameter) { return callback(parameter, abstract_1.TraverseProperty.TypeParameter); });
+            this.typeParameters.slice().forEach(function (parameter) { return callback(parameter, abstract_1.TraverseProperty.TypeParameter); });
         }
         if (this.parameters) {
-            this.parameters.forEach(function (parameter) { return callback(parameter, abstract_1.TraverseProperty.Parameters); });
+            this.parameters.slice().forEach(function (parameter) { return callback(parameter, abstract_1.TraverseProperty.Parameters); });
         }
         _super.prototype.traverse.call(this, callback);
     };

@@ -65,7 +65,7 @@ var JavascriptIndexPlugin = (function (_super) {
         }
         var fileName = Path.join(event.outputDirectory, 'assets', 'js', 'search.js');
         var data = "var typedoc = typedoc || {};\n            typedoc.search = typedoc.search || {};\n            typedoc.search.data = " + JSON.stringify({ kinds: kinds, rows: rows }) + ";";
-        fs_1.writeFile(fileName, data, true);
+        fs_1.writeFile(fileName, data, false);
     };
     JavascriptIndexPlugin = __decorate([
         components_1.Component({ name: 'javascript-index' })

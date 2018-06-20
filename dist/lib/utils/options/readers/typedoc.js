@@ -32,6 +32,9 @@ var TypedocReader = (function (_super) {
         this.listenTo(this.owner, options_1.DiscoverEvent.DISCOVER, this.onDiscover, -150);
     };
     TypedocReader.prototype.onDiscover = function (event) {
+        if (event.mode !== options_1.OptionsReadMode.Fetch) {
+            return;
+        }
         if (TypedocReader_1.OPTIONS_KEY in event.data) {
             this.load(event, Path.resolve(event.data[TypedocReader_1.OPTIONS_KEY]));
         }

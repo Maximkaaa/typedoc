@@ -85,4 +85,48 @@ describe('Converter', function () {
         });
     });
 });
+describe('Converter with excludeNotExported=true', function () {
+    var base = Path.join(__dirname, 'converter');
+    var exportWithLocalDir = Path.join(base, 'export-with-local');
+    var classDir = Path.join(base, 'class');
+    var app;
+    it('constructs', function () {
+        app = new __1.Application({
+            mode: 'Modules',
+            logger: 'none',
+            target: 'ES5',
+            module: 'CommonJS',
+            experimentalDecorators: true,
+            excludeNotExported: true,
+            jsx: 'react'
+        });
+    });
+    var result;
+    describe('export-with-local', function () {
+        it('converts fixtures', function () {
+            __1.resetReflectionID();
+            result = app.convert(app.expandInputFiles([exportWithLocalDir]));
+            Assert(result instanceof __1.ProjectReflection, 'No reflection returned');
+        });
+        it('matches specs', function () {
+            var specs = JSON.parse(FS.readFileSync(Path.join(exportWithLocalDir, 'specs-without-exported.json')).toString());
+            var data = JSON.stringify(result.toObject(), null, '  ');
+            data = data.split(__1.normalizePath(base)).join('%BASE%');
+            compareReflections(JSON.parse(data), specs);
+        });
+    });
+    describe('class', function () {
+        it('converts fixtures', function () {
+            __1.resetReflectionID();
+            result = app.convert(app.expandInputFiles([classDir]));
+            Assert(result instanceof __1.ProjectReflection, 'No reflection returned');
+        });
+        it('matches specs', function () {
+            var specs = JSON.parse(FS.readFileSync(Path.join(classDir, 'specs-without-exported.json')).toString());
+            var data = JSON.stringify(result.toObject(), null, '  ');
+            data = data.split(__1.normalizePath(base)).join('%BASE%');
+            compareReflections(JSON.parse(data), specs);
+        });
+    });
+});
 //# sourceMappingURL=converter.js.map

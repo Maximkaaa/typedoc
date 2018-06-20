@@ -28,7 +28,12 @@ var ArrayConverter = (function (_super) {
         return node.kind === ts.SyntaxKind.ArrayType;
     };
     ArrayConverter.prototype.supportsType = function (context, type) {
-        return !!(type.flags & ts.TypeFlags.Object) && !!type.symbol && type.symbol.name === 'Array' && !type.symbol.parent && !!type.typeArguments && type.typeArguments.length === 1;
+        return !!(type.flags & ts.TypeFlags.Object)
+            && !!type.symbol
+            && type.symbol.name === 'Array'
+            && !type.symbol.parent
+            && !!type.typeArguments
+            && type.typeArguments.length === 1;
     };
     ArrayConverter.prototype.convertNode = function (context, node) {
         var result = this.owner.convertType(context, node.elementType);

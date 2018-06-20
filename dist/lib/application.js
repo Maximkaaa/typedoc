@@ -22,6 +22,7 @@ var typescript = require("typescript");
 var minimatch_1 = require("minimatch");
 var index_1 = require("./converter/index");
 var renderer_1 = require("./output/renderer");
+var serialization_1 = require("./serialization");
 var index_2 = require("./models/index");
 var index_3 = require("./utils/index");
 var component_1 = require("./utils/component");
@@ -33,6 +34,7 @@ var Application = (function (_super) {
         var _this = _super.call(this, null) || this;
         _this.logger = new index_3.ConsoleLogger();
         _this.converter = _this.addComponent('converter', index_1.Converter);
+        _this.serializer = _this.addComponent('serializer', serialization_1.Serializer);
         _this.renderer = _this.addComponent('renderer', renderer_1.Renderer);
         _this.plugins = _this.addComponent('plugins', index_3.PluginHost);
         _this.options = _this.addComponent('options', index_4.Options);
@@ -50,7 +52,7 @@ var Application = (function (_super) {
             this.logger = new index_3.Logger();
         }
         this.plugins.load();
-        return this.options.read(options, index_4.OptionsReadMode.Fetch);
+        return this.options.read(this.options.getRawValues(), index_4.OptionsReadMode.Fetch);
     };
     Object.defineProperty(Application.prototype, "application", {
         get: function () {
@@ -112,14 +114,17 @@ var Application = (function (_super) {
             return false;
         }
         out = Path.resolve(out);
-        index_3.writeFile(out, JSON.stringify(project.toObject(), null, '\t'), false);
+        var eventData = { outputDirectory: Path.dirname(out), outputFile: Path.basename(out) };
+        var ser = this.serializer.projectToObject(project, { begin: eventData, end: eventData });
+        index_3.writeFile(out, JSON.stringify(ser, null, '\t'), false);
         this.logger.success('JSON written to %s', out);
         return true;
     };
     Application.prototype.expandInputFiles = function (inputFiles) {
-        var exclude, files = [];
-        if (this.exclude) {
-            exclude = new minimatch_1.Minimatch(this.exclude);
+        var files = [];
+        var exclude = this.exclude ? this.exclude.map(function (pattern) { return new minimatch_1.Minimatch(pattern); }) : [];
+        function isExcluded(fileName) {
+            return exclude.some(function (mm) { return mm.match(fileName); });
         }
         function add(dirname) {
             FS.readdirSync(dirname).forEach(function (file) {
@@ -128,7 +133,7 @@ var Application = (function (_super) {
                     add(realpath);
                 }
                 else if (/\.tsx?$/.test(realpath)) {
-                    if (exclude && exclude.match(realpath.replace(/\\/g, '/'))) {
+                    if (isExcluded(realpath.replace(/\\/g, '/'))) {
                         return;
                     }
                     files.push(realpath);
@@ -140,7 +145,7 @@ var Application = (function (_super) {
             if (FS.statSync(file).isDirectory()) {
                 add(file);
             }
-            else if (!exclude || !exclude.match(file)) {
+            else if (!isExcluded(file)) {
                 files.push(file);
             }
         });
@@ -154,7 +159,7 @@ var Application = (function (_super) {
             ''
         ].join(typescript.sys.newLine);
     };
-    Application.VERSION = '0.9.0';
+    Application.VERSION = '0.11.1';
     __decorate([
         component_1.Option({
             name: 'logger',
@@ -173,8 +178,8 @@ var Application = (function (_super) {
     __decorate([
         component_1.Option({
             name: 'exclude',
-            help: 'Define a pattern for excluded files when specifying paths.',
-            type: declaration_1.ParameterType.String
+            help: 'Define patterns for excluded files when specifying paths.',
+            type: declaration_1.ParameterType.Array
         })
     ], Application.prototype, "exclude", void 0);
     Application = Application_1 = __decorate([

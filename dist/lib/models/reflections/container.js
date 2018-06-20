@@ -28,7 +28,7 @@ var ContainerReflection = (function (_super) {
     };
     ContainerReflection.prototype.traverse = function (callback) {
         if (this.children) {
-            this.children.forEach(function (child) {
+            this.children.slice().forEach(function (child) {
                 callback(child, abstract_1.TraverseProperty.Children);
             });
         }

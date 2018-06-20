@@ -32,7 +32,7 @@ var AliasConverter = (function (_super) {
     AliasConverter.prototype.convert = function (context, node) {
         var _this = this;
         var alias = index_2.createDeclaration(context, node, index_1.ReflectionKind.TypeAlias);
-        context.withScope(alias, function () {
+        context.withScope(alias, node.typeParameters, function () {
             alias.type = _this.owner.convertType(context, node.type, context.getTypeAtLocation(node.type));
         });
         return alias;

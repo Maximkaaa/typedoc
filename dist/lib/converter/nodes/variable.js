@@ -68,22 +68,23 @@ var VariableConverter = (function (_super) {
         var scope = context.scope;
         var kind = scope.kind & index_1.ReflectionKind.ClassOrInterface ? index_1.ReflectionKind.Property : index_1.ReflectionKind.Variable;
         var variable = index_2.createDeclaration(context, node, kind, name);
-        switch (kind) {
-            case index_1.ReflectionKind.Variable:
-                if (node.parent.flags & ts.NodeFlags.Const) {
-                    variable.setFlag(index_1.ReflectionFlag.Const, true);
-                }
-                else if (node.parent.flags & ts.NodeFlags.Let) {
-                    variable.setFlag(index_1.ReflectionFlag.Let, true);
-                }
-                break;
-            case index_1.ReflectionKind.Property:
-                if (variable
-                    && node.modifiers
-                    && node.modifiers.some(function (m) { return m.kind === ts.SyntaxKind.AbstractKeyword; })) {
-                    variable.setFlag(index_1.ReflectionFlag.Abstract, true);
-                }
-                break;
+        if (variable) {
+            switch (kind) {
+                case index_1.ReflectionKind.Variable:
+                    if (node.parent.flags & ts.NodeFlags.Const) {
+                        variable.setFlag(index_1.ReflectionFlag.Const, true);
+                    }
+                    else if (node.parent.flags & ts.NodeFlags.Let) {
+                        variable.setFlag(index_1.ReflectionFlag.Let, true);
+                    }
+                    break;
+                case index_1.ReflectionKind.Property:
+                    if (node.modifiers
+                        && node.modifiers.some(function (m) { return m.kind === ts.SyntaxKind.AbstractKeyword; })) {
+                        variable.setFlag(index_1.ReflectionFlag.Abstract, true);
+                    }
+                    break;
+            }
         }
         context.withScope(variable, function () {
             if (node.initializer) {

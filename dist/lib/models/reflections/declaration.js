@@ -39,13 +39,13 @@ var DeclarationReflection = (function (_super) {
     };
     DeclarationReflection.prototype.traverse = function (callback) {
         if (this.typeParameters) {
-            this.typeParameters.forEach(function (parameter) { return callback(parameter, abstract_1.TraverseProperty.TypeParameter); });
+            this.typeParameters.slice().forEach(function (parameter) { return callback(parameter, abstract_1.TraverseProperty.TypeParameter); });
         }
         if (this.type instanceof index_1.ReflectionType) {
             callback(this.type.declaration, abstract_1.TraverseProperty.TypeLiteral);
         }
         if (this.signatures) {
-            this.signatures.forEach(function (signature) { return callback(signature, abstract_1.TraverseProperty.Signatures); });
+            this.signatures.slice().forEach(function (signature) { return callback(signature, abstract_1.TraverseProperty.Signatures); });
         }
         if (this.indexSignature) {
             callback(this.indexSignature, abstract_1.TraverseProperty.IndexSignature);
